@@ -3,15 +3,27 @@ def sort_array_asc(array)
 end
 
 def sort_array_desc(array)
-  array.sort { |a, b| b <=> a }
+  array.sort.reverse
 end
 
 def sort_array_char_count(array)
-  array.sort_by { |word| word.length}
+  array.sort do |a, b|
+    if a.length == b.length
+      0
+    elsif a.length < b.length
+      -1
+    elsif a.length > b.length
+      1
+    end
+  end
 end
 
 def swap_elements(array)
-  array[1], array [2] = array[2], array[1]
+  second_e = array[1]
+  third_e = array[2]
+
+  array[1] = third_e
+  array[2] = second_e
   array
 end
 
@@ -20,25 +32,24 @@ def reverse_array(array)
 end
 
 def kesha_maker(array)
-  array.each do |word|
-    word[2] = "$"
-  end
+  array.each { |e| e[2] = "$" }
+  array
 end
 
 def find_a(array)
-  array.select { |word| word.start_with?("a")}
+  array.select { |e| e.start_with?("a") }
 end
 
 def sum_array(array)
-  array.inject{ |sum, x| sum + x }
+  array.inject { |sum, n| sum + n }
 end
 
 def add_s(array)
-  array.each_with_index.collect do |element, index|
-    if index != 1
-      "#{element + 's'}"
+  array.each_with_index.map do |e, i|
+    unless i == 1
+      e + "s"
     else
-      "#{element}"
+      e
     end
   end
 end
