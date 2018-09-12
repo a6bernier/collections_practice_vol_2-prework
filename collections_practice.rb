@@ -1,62 +1,84 @@
-
-def sort_array_asc(array)
-  array.sort
+def begins_with_r(array)
+  array.all? { |e| e.start_with?("r") }
 end
 
-def sort_array_desc(array)
-  array.sort do |a, b|
-    b <=> a
-  end
+def contain_a(array)
+  array.select { |w| w.include?("a")}
 end
 
-def sort_array_char_count(array)
-  array.sort do |a, b|
-    a.size <=> b.size
-  end
+def first_wa(array)
+  first_wa2 = []
+  array.each { |sy| first_wa2 << sy.to_s }
+  first_wa2.find { |w| w.include?("wa")}
 end
 
-def swap_elements(array)
-  new_second_elem = array[2]
-  new_third_item = array[1]
-
-  array[1] = new_second_elem
-  array[2] = new_third_item
-  return array
+def remove_non_strings(array)
+    array.delete_if { |i| i.class != String }
 end
 
-def reverse_array(array)
-  array.reverse
-end
 
-def kesha_maker(arr)
-  arr.collect do |i|
-    new_word = i.split("")
-    new_word[2] = "$"
-    new_word.join
-  end
-end
+# [{:name => "blake"}, {:name => "blake"}, {:name => "ashley"}]
+# {:name=>"blake", :count=>2}, {:name=>"ashley", :count=>1}
 
-def find_a(arr)
-  new_array = []
-  arr.each_with_index do |word|
-    if word.split("")[0] == "a"
-      new_array << word
+def count_elements(array)
+    #creating an empty array to reference later
+    output = []
+    #iterate over the given array
+    array.each do |hash|
+        #setting a new variable, name, to the name in the given hash
+        name = hash[:name]
+        #creating a new hash with nil value
+        current_hash = nil
+        output.each do |output_hash|
+            if output_hash[:name] == name
+                current_hash = output_hash
+                break
+            end
+        end
+        if current_hash.nil?
+            output.push({name: name, count: 1})
+        else
+            current_hash[:count] += 1
+        end
     end
+    output
+end
+
+def merge_data(keys, data)
+  counter = 0
+  new_array =[]
+  values_for_new_array = data[0].values
+
+  loop do
+    new_array << keys[counter].merge(values_for_new_array[counter])
+    counter += 1
+    break if counter > 1
   end
   new_array
 end
 
-def sum_array(arr)
-  arr.inject(0) do |r, e|
-    r + e
+def find_cool(cool)
+  just_cool = []
+  cool.each do |hashes|
+     if hashes[:temperature] == "cool"
+       just_cool << hashes
+     end
   end
+  just_cool
 end
-def add_s(arr)
-  arr.each_with_index.collect do |e, i|
-    if i == 1
-      e
-    else
-      e+"s"
-    end
-  end
-end
+
+def organize_schools(schools)
+   organized = {}
+   school_array = []
+   schools.each do |school, location_hash|
+     location_hash.each do |location_key, city|
+
+       if not organized[city]
+         organized[city] = []
+       end
+
+       organized[city] << school
+     end
+   end
+   organized
+ end
